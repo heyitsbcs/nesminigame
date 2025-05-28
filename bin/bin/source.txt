@@ -1,0 +1,2 @@
+Tools are built from cc65 github repository fetched on 2022-08-03:
+https://github.com/cc65/cc65/tree/4de40a20cb641a80de9b03222a0c686443178d43

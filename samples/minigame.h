@@ -1,0 +1,9 @@
+// Input definitions
+#define PAD_A 0x80
+#define PAD_B 0x40
+#define PAD_SELECT 0x20
+#define PAD_START 0x10
+#define PAD_U 0x08
+#define PAD_D 0x04
+#define PAD_L 0x02
+#define PAD_R 0x01

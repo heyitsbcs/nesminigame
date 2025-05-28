@@ -1,0 +1,14 @@
+Open Source and pre-existing software used in this project:
+
+cnes.h
+cnes.s
+NES/C base library
+Source: https://github.com/bbbradsmith/boingnes
+Author: Brad Smith
+License: CC-BY 4.0
+
+prng_6502.s
+Random number generator
+Source: https://github.com/bbbradsmith/prng_6502/blob/master/galois32.s
+Author: Brad Smith
+License: Public Domain

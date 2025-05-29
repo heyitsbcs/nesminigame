@@ -9,6 +9,7 @@
 
 .importzp ptr1
 .importzp ptr2
+.importzp sp
 
 .import _input_poll
 .import _ppu_wait_frame
@@ -84,6 +85,15 @@ _mgjumpcopy:
     inx
     cpx #24
     bne _mgjumpcopy
+
+; fill minigame ZP with our sp... because it's dumb
+    ldx #0
+    lda sp
+_mgzpcopy:
+    sta $00c0,x
+    inx
+    cpx #48
+    bne _mgzpcopy
 
 ; clear sprites
     ldx #$00
@@ -194,6 +204,8 @@ copypalloop:
     jsr jmpptr2
 
 minigameloop:
+    lda #$04    ; oam-only mode
+    sta ppu_ready
     jsr _ppu_wait_frame
 
 ; call minigame's update
@@ -205,7 +217,7 @@ minigameloop:
     sta ptr2+1
 
     jsr _input_poll
-	lda _input_new
+	lda _input
     jsr jmpptr2
     cmp #$00
     beq minigameloop

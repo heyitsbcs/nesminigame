@@ -1,3 +1,5 @@
 build/
 samples/*.o
 samples/*.bin
+samples/*.map
+*.o

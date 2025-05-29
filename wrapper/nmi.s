@@ -98,12 +98,12 @@ nmi:
 	sta $2001
 	sta _ppu_on
 @post_send:
-	lda #<.bank(famistudio_update)
-	jsr irq_prg_bankswitch
+	; lda #<.bank(famistudio_update)
+	; jsr irq_prg_bankswitch
 	; jsr famistudio_update
 	; TODO status bar
 	; restore bank
-	jsr irq_prg_bank_restore
+	; jsr irq_prg_bank_restore
 	lda #0
 	sta ppu_ready
 	sta nmi_lock

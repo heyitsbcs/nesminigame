@@ -7,3 +7,12 @@
 #define PAD_D 0x04
 #define PAD_L 0x02
 #define PAD_R 0x01
+
+#define oam ((unsigned char *)0x0200)
+
+#define SPRITE(num, x, y, tile, flags) \
+    *((unsigned char *)0x0200+(num<<2)) = y; \
+    *((unsigned char *)0x0201+(num<<2)) = tile; \
+    *((unsigned char *)0x0202+(num<<2)) = flags; \
+    *((unsigned char *)0x0203+(num<<2)) = x;
+

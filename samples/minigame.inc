@@ -15,8 +15,7 @@ PAD_D       = $04
 PAD_L       = $02
 PAD_R       = $01
 
-.export sp
-sp = $A0
+.importzp sp
 
 MINIGAME_ZP = $C0   ; 48-bytes from $C0-$EF to be used freely by minigames - largely used already if using CC65
 

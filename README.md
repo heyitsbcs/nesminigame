@@ -46,3 +46,18 @@ However, along with these limitations, the system does a lot for you:
  - FamiStudio is included outside of your code/ram usage, you'll just need to supply your song data along with the minigame binary
 
 
+## building
+First, you need to make the minigame. Go into the samples directory, pick a sample (currently there's only csamp), and in that directory, run make.bat
+
+Then, build the wrapper by running build_rom.bat in the root of the project.
+
+The output rom will be build/wrapper.nes
+
+Depending on the sample chosen you'll see different things when running.
+
+### csamp
+
+![image](https://github.com/user-attachments/assets/c46f7f0f-940a-4086-8dac-39de47e841f6)
+
+
+(more samples coming soon)

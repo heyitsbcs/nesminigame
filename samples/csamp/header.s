@@ -23,7 +23,7 @@ sample_pal:
     .byte $0f, $16, $0b, $3d    ; bg pal 3
 
     .byte $0f, $10, $1c, $27    ; sp pal 0
-    .byte $0f, $16, $0b, $3d    ; sp pal 1
+    .byte $0f, $00, $10, $20    ; bg pal 0
     .byte $0f, $16, $0b, $3d    ; sp pal 2
     .byte $0f, $16, $0b, $3d    ; sp pal 3
 
@@ -70,7 +70,26 @@ sample_tiles:
     .byte %00000000
     .byte %00000000
 
-    ; tile 3, empty
+    ; tile 3, ufo
+    .byte %00000000
+    .byte %00000000
+    .byte %00011000
+    .byte %00100100
+    .byte %01000010
+    .byte %10000001
+    .byte %01111110
+    .byte %00000000
+
+    .byte %00000000
+    .byte %00000000
+    .byte %00000000
+    .byte %00011000
+    .byte %00100100
+    .byte %01111110
+    .byte %00000000
+    .byte %00000000
+
+    ; tile 4, empty
     .byte $00, $00, $00, $00, $00, $00, $00, $00
     .byte $00, $00, $00, $00, $00, $00, $00, $00
 

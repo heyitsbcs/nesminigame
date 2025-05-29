@@ -13,6 +13,12 @@ unsigned char shotY[NUM_SHOTS];
 unsigned char shotLife[NUM_SHOTS];
 unsigned char shotDelay;
 
+unsigned char ufoX;
+unsigned char ufoY;
+unsigned char ufoDelay;
+
+unsigned char score;
+
 void csample_init()
 {
     unsigned char i;
@@ -25,6 +31,12 @@ void csample_init()
         shotLife[i] = 0;
     }
     shotDelay = 15;
+
+    ufoX = 0xff;
+    ufoY = 0xff;
+    ufoDelay = 0x10;
+
+    score = 0;
 }
 
 unsigned char csample_update(unsigned char key)
@@ -80,8 +92,20 @@ unsigned char csample_update(unsigned char key)
         {
             SPRITE(i+1, 0xff, 0xff, 2, 0);
         }
-
     }
 
+    ufoDelay--;
+    if (ufoDelay == 0)
+    {
+        ufoX = 240;
+        ufoY = 16;
+    }
+    else
+    {
+        ufoX--;
+    }
+
+    SPRITE(8, ufoX, ufoY, 3, 1);
+    
     return 0;
 }

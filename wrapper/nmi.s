@@ -32,8 +32,6 @@ nmi:
 	pha
 	lda ppu_ready
 	beq @post_send ; 0 = no update
-	cmp #4	  ; 4 = only send OAM data
-	beq @oamonly
 	cmp #2 
 	bcc @send ; 2 = render off
 	lda ppu_2001
@@ -43,14 +41,6 @@ nmi:
 	sta _ppu_on ; remember off
 	sta _ppu_send_pos ; cancel any unsent update
 	sta _ppu_send+0
-	jmp @post_send
-
-@oamonly:
-	; OAM
-	ldx #0
-	stx $2003
-	lda #>_oam
-	sta $4014
 	jmp @post_send
 
 @send: ; 1 = send ppu data
@@ -98,12 +88,12 @@ nmi:
 	sta $2001
 	sta _ppu_on
 @post_send:
-	; lda #<.bank(famistudio_update)
-	; jsr irq_prg_bankswitch
-	; jsr famistudio_update
+	lda #<.bank(famistudio_update)
+	jsr irq_prg_bankswitch
+	jsr famistudio_update
 	; TODO status bar
 	; restore bank
-	; jsr irq_prg_bank_restore
+	jsr irq_prg_bank_restore
 	lda #0
 	sta ppu_ready
 	sta nmi_lock

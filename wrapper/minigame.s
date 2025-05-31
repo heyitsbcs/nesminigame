@@ -9,7 +9,8 @@
 
 .importzp ptr1
 .importzp ptr2
-.importzp sp
+
+.import _ppu_packet_reserve
 
 .import _input_poll
 .import _ppu_wait_frame
@@ -29,8 +30,7 @@
 .segment "FIXED"
 
 _mg_play_song:
-_mg_func1:
-_mg_func2:
+_mg_play_sfx:
 _mg_func3:
 _mg_func4:
 _mg_func5:
@@ -40,8 +40,8 @@ _mg_func7:
 
 _minigame_jump_base:
     jmp _mg_play_song
-    jmp _mg_func1
-    jmp _mg_func2
+    jmp _mg_play_sfx
+    jmp _ppu_packet_reserve
     jmp _mg_func3
     jmp _mg_func4
     jmp _mg_func5
@@ -73,9 +73,13 @@ _minigame_launch: ; void minigame_launch(uint8 minigame_index)
     lda #$00
     sta $2000   ; nametable at $2000, inc 1 byte, sprites at $0000, pattern at $0000, 8x8 sprites, vblank disabled
     sta $2001   ; disable video
+    sta ppu_2000
+    sta ppu_2001
     ; reset scroll to 0,0
     sta $2005
     sta $2005
+    sta ppu_2005
+    sta ppu_2005+1
 
 ; copy jump table
     ldx #0
@@ -85,15 +89,6 @@ _mgjumpcopy:
     inx
     cpx #24
     bne _mgjumpcopy
-
-; fill minigame ZP with our sp... because it's dumb
-    ldx #0
-    lda sp
-_mgzpcopy:
-    sta $00c0,x
-    inx
-    cpx #48
-    bne _mgzpcopy
 
 ; clear sprites
     ldx #$00
@@ -168,6 +163,7 @@ copymaploop:
 copypalloop:
     lda (ptr2),y
     sta $2007
+    sta _palette,y
     iny
     cpy #32
     bne copypalloop
@@ -182,16 +178,20 @@ copypalloop:
 
     lda #$80
     sta $2000   ; nametable at $2000, inc 1 byte, sprites at $0000, pattern at $0000, 8x8 sprites, vblank enabled
+    sta ppu_2000
 
 	lda #%00011110
     sta $2001
+    sta ppu_2001
 
     bit $2002
     lda #$00
     sta $2005
     sta $2005
+    sta ppu_2005
+    sta ppu_2005+1
 
-    lda #$04    ; oam-only mode
+    lda #$01    ; oam-only mode
     sta ppu_ready
 
 ; call minigame's init
@@ -201,10 +201,19 @@ copypalloop:
     iny
     lda (ptr1),y
     sta ptr2+1
+
+    lda ptr1
+    pha
+    lda ptr1+1
+    pha
     jsr jmpptr2
+    pla
+    sta ptr1+1
+    pla
+    sta ptr1
 
 minigameloop:
-    lda #$04    ; oam-only mode
+    lda #$01    ; oam-only mode
     sta ppu_ready
     jsr _ppu_wait_frame
 
@@ -216,9 +225,21 @@ minigameloop:
     lda (ptr1),y
     sta ptr2+1
 
+    lda ptr1
+    pha
+    lda ptr1+1
+    pha
+
     jsr _input_poll
 	lda _input
     jsr jmpptr2
+
+    tax
+    pla
+    sta ptr1+1
+    pla
+    sta ptr1
+    txa
     cmp #$00
     beq minigameloop
 

@@ -18,10 +18,14 @@ unsigned char ufoY;
 unsigned char ufoDelay;
 
 unsigned char score;
+unsigned char displayedScore;
 
 void csample_init()
 {
     unsigned char i;
+
+    // NOTE: This must be the first thing called in your init function
+    copydata();
 
     shipX = 120;
     shipY = 180;
@@ -37,11 +41,40 @@ void csample_init()
     ufoDelay = 0x10;
 
     score = 0;
+    displayedScore = 0xff;
 }
 
 unsigned char csample_update(unsigned char key)
 {
     unsigned char i;
+
+    if (score != displayedScore)
+    {
+    
+        i = ppu_reserve(0x2024, 2);
+
+        if (score < 10)
+        {
+            ppu_send[i] = 0x10;
+            ppu_send[i+1] = 0x10+score;
+        }
+        else
+        {
+            unsigned char tens;
+
+            tens = 0;
+            displayedScore = score;
+            while (displayedScore >= 10)
+            {
+                tens++;
+                displayedScore -= 10;
+            }
+
+            ppu_send[i] = 0x10+tens;
+            ppu_send[i+1] = 0x10+displayedScore;
+        }
+        displayedScore = score;
+    }
 
     if (shotDelay > 0) shotDelay--;
 
@@ -87,6 +120,21 @@ unsigned char csample_update(unsigned char key)
             shotY[i]-=2;
 
             SPRITE(i+1, shotX[i], shotY[i], 2, 0);
+
+            if (ufoX != 0xff && ufoY != 0xff)
+            {
+                if (shotX[i]+6 >= ufoX && shotX[i]+2 <= ufoX+8)
+                {
+                    if (shotY[i]+6 >= ufoY+3 && shotY[i]+2 <= ufoY+5)
+                    {
+                        score++;
+                        if (score > 99) score = 99;
+                        shotLife[i] = 0;
+                        ufoX = 0xff;
+                        ufoY = 0xff;
+                    }
+                }
+            }
         }
         else
         {
@@ -100,12 +148,12 @@ unsigned char csample_update(unsigned char key)
         ufoX = 240;
         ufoY = 16;
     }
-    else
+    else if (ufoX != 0xff && ufoY != 0xff)
     {
         ufoX--;
     }
 
     SPRITE(8, ufoX, ufoY, 3, 1);
-    
+
     return 0;
 }

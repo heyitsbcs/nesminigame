@@ -3,6 +3,9 @@
 .export CSAMPLE_TABLE
 .import _csample_init
 .import _csample_update
+.import copydata
+
+.export _copydata
 
 .segment "HEADER"
 
@@ -28,71 +31,7 @@ sample_pal:
     .byte $0f, $16, $0b, $3d    ; sp pal 3
 
 sample_tiles:
-    ; tile 0, empty
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-
-    ; tile 1, ship  pal 0 = trans, 1 = grey, 2 = blue, 3 = orange
-    .byte %00011000
-    .byte %00011000
-    .byte %00011000
-    .byte %10000001
-    .byte %10111101
-    .byte %11111111
-    .byte %10111101
-    .byte %10011001
-
-    .byte %00000000
-    .byte %00000000
-    .byte %00000000
-    .byte %00011000
-    .byte %00000000
-    .byte %00000000
-    .byte %00000000
-    .byte %10011001
-
-    ; tile 2, bullet
-    .byte %00000000
-    .byte %00000000
-    .byte %00011000
-    .byte %00111100
-    .byte %00111100
-    .byte %00011000
-    .byte %00000000
-    .byte %00000000
-
-    .byte %00000000
-    .byte %00000000
-    .byte %00011000
-    .byte %00111100
-    .byte %00111100
-    .byte %00011000
-    .byte %00000000
-    .byte %00000000
-
-    ; tile 3, ufo
-    .byte %00000000
-    .byte %00000000
-    .byte %00011000
-    .byte %00100100
-    .byte %01000010
-    .byte %10000001
-    .byte %01111110
-    .byte %00000000
-
-    .byte %00000000
-    .byte %00000000
-    .byte %00000000
-    .byte %00011000
-    .byte %00100100
-    .byte %01111110
-    .byte %00000000
-    .byte %00000000
-
-    ; tile 4, empty
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-    .byte $00, $00, $00, $00, $00, $00, $00, $00
-
+.incbin "tiles.bin"
 
 sample_map:
     .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -213,3 +152,6 @@ testmg_updateASM:
     and #PAD_START
 
     rts
+
+_copydata:
+    jmp copydata

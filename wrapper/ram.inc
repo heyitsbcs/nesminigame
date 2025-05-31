@@ -30,7 +30,7 @@
 ;   X = _y
 ;   A = _x
 
-.segment "ZEROPAGE"
+.segment "ZEROPGWR"
 RESZP last_prg_bank, 1 ; last used PRG bank (outside of NMI)
 RESZP prg_bankswitch_active, 1 ; guard for IRQ interference with bankswitching
 

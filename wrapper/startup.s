@@ -110,6 +110,11 @@ init:
 	lda #%10001000
 	sta ppu_2000
 	sta $2000
+
+	lda #0
+	sta _ppu_send_pos ; cancel any unsent update
+	sta _ppu_send+0
+
 	; initialize cc65 and enter main()
 	lda #<(cstack + CSTACK_SIZE)
 	sta sp+0

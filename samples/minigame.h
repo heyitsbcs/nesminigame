@@ -16,3 +16,7 @@
     *((unsigned char *)0x0202+(num<<2)) = flags; \
     *((unsigned char *)0x0203+(num<<2)) = x;
 
+#define ppu_send ((unsigned char*)0x0100)    
+unsigned char (*ppu_reserve)(unsigned short addr, unsigned char count) = (unsigned char(*)(unsigned short, unsigned char))0x0406;
+
+extern void copydata(); // NOTE: This must be the first thing called in your init function

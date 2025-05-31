@@ -8,9 +8,9 @@
 @for %%X in (*.c)          do ..\bin\bin\cc65.exe %%X -O -T -g -Werror -o ..\build\%%~nX.s || @goto error
 
 @REM assemble objects
-@for %%X in (*.s)          do ..\bin\bin\ca65.exe %%X       -g         -o ..\build\%%~nX.o || @goto error
-@for %%X in (oss\*.s)      do ..\bin\bin\ca65.exe %%X       -g         -o ..\build\%%~nX.o || @goto error
-@for %%X in (..\build\*.s) do ..\bin\bin\ca65.exe %%X       -g         -o ..\build\%%~nX.o || @goto error
+@for %%X in (*.s)          do ..\bin\bin\ca65.exe %%X -W0      -g         -o ..\build\%%~nX.o || @goto error
+@for %%X in (oss\*.s)      do ..\bin\bin\ca65.exe %%X -W0      -g         -o ..\build\%%~nX.o || @goto error
+@for %%X in (..\build\*.s) do ..\bin\bin\ca65.exe %%X -W0      -g         -o ..\build\%%~nX.o || @goto error
 
 @REM add every object to OBJECTS list
 @setlocal EnableDelayedExpansion

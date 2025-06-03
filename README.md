@@ -47,7 +47,7 @@ However, along with these limitations, the system does a lot for you:
 
 
 ## building
-First, you need to make the minigame. Go into the samples directory, pick a sample (currently there's only csamp), and in that directory, run make.bat
+First, you need to make the minigame. Go into the samples directory, pick a sample, and in that directory, run make.bat
 
 Then, build the wrapper by running build_rom.bat in the root of the project.
 
@@ -55,9 +55,13 @@ The output rom will be build/wrapper.nes
 
 Depending on the sample chosen you'll see different things when running.
 
+### asamp
+
+<img src="https://github.com/user-attachments/assets/bc85cdb5-ac85-40b3-8e8d-c5506e4d6314" style="width: 300px; height: auto;" />
+
 ### csamp
 
-![image](https://github.com/user-attachments/assets/c46f7f0f-940a-4086-8dac-39de47e841f6)
+<img src="https://github.com/user-attachments/assets/c46f7f0f-940a-4086-8dac-39de47e841f6" style="width: 300px; height: auto;" />
 
 
 (more samples coming soon)

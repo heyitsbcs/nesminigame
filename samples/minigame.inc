@@ -22,3 +22,14 @@ MINIGAME_ZP = $C0   ; 48-bytes from $C0-$EF to be used freely by minigames - lar
 ; RAM areas
 OAM             = $0200 ; 256-byte OAM buffer, DMA'd to PPU in NMI interrupt
 MINIGAME_RAM    = $0300 ; 256-bytes of available ram for minigames
+
+.macro SPRITE spr, sx, sy, tile, flags
+    lda sy
+    sta OAM+(spr<<2)
+    lda tile
+    sta OAM+1+(spr<<2)
+    lda flags
+    sta OAM+2+(spr<<2)
+    lda sx
+    sta OAM+3+(spr<<2)
+.endmacro

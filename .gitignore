@@ -1,5 +1,7 @@
 build/
 samples/*.o
-samples/*.bin
-samples/*.map
+samples/minigame.bin
+samples/*/*.map
+samples/*/*.dbg
 *.o
+samples/csamp/csamp.s
